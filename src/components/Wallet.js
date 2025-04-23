@@ -1,18 +1,43 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function Wallet() {
+  const location = useLocation();
+  const userId = location.state?.userId || ""; // Get userId from login state
+
   const [transaction, setTransaction] = useState({
-    senderContact: "",
     receiverContact: "",
     amount: ""
   });
 
   const [addMoneyData, setAddMoneyData] = useState({
-    userId: "",
     balance: ""
   });
 
+  const [walletBalance, setWalletBalance] = useState(0);
+
   const API_BASE_URL = "http://localhost:8083/txns";
+  const WALLET_BASE_URL="http://localhost:8081/wallets";
+
+  useEffect(() => {
+    const fetchWalletBalance = async () => {
+      try {
+        const response = await fetch(`${WALLET_BASE_URL}?userId=${userId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch balance");
+        }
+        const data = await response.json();
+        setWalletBalance(data.balance);
+      } catch (error) {
+        console.error("Error fetching wallet balance:", error);
+      }
+    };
+
+    if (userId) {
+      fetchWalletBalance();
+    }
+  }, [userId]);
 
   const handleTransactionChange = (e) => {
     setTransaction({ ...transaction, [e.target.name]: e.target.value });
@@ -30,7 +55,7 @@ function Wallet() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          senderContact: parseInt(transaction.senderContact, 10),
+          senderContact: parseInt(userId, 10), // Set senderContact from userId
           receiverContact: parseInt(transaction.receiverContact, 10),
           amount: parseFloat(transaction.amount)
         })
@@ -56,7 +81,7 @@ function Wallet() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          userId: parseInt(addMoneyData.userId, 10),
+          userId: parseInt(userId, 10), // Set userId from login state
           balance: parseFloat(addMoneyData.balance)
         })
       });
@@ -80,12 +105,22 @@ function Wallet() {
     backgroundColor: "#fff",
     borderRadius: "10px",
     boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    position: "relative"
   };
 
   const headerStyle = {
     textAlign: "center",
     marginBottom: "20px",
+    color: "#333"
+  };
+
+  const balanceStyle = {
+    position: "absolute",
+    top: "10px",
+    right: "20px",
+    fontSize: "16px",
+    fontWeight: "bold",
     color: "#333"
   };
 
@@ -118,19 +153,11 @@ function Wallet() {
 
   return (
     <div style={containerStyle}>
+      <div style={balanceStyle}>User ID: {userId} | Balance: INR{walletBalance}</div>
       <h1 style={headerStyle}>Wallet Dashboard</h1>
 
       <div style={sectionStyle}>
         <h2 style={{ textAlign: "center", color: "#555" }}>Send Money</h2>
-        <input
-          type="number"
-          name="senderContact"
-          placeholder="Sender Contact"
-          value={transaction.senderContact}
-          onChange={handleTransactionChange}
-          style={inputStyle}
-          required
-        />
         <input
           type="number"
           name="receiverContact"
@@ -157,15 +184,6 @@ function Wallet() {
 
       <div>
         <h2 style={{ textAlign: "center", color: "#555" }}>Add Money</h2>
-        <input
-          type="number"
-          name="userId"
-          placeholder="User ID"
-          value={addMoneyData.userId}
-          onChange={handleAddMoneyChange}
-          style={inputStyle}
-          required
-        />
         <input
           type="number"
           step="0.01"
