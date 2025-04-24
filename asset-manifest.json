@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/PleaseGod/static/css/main.9e76b6f4.css",
-    "main.js": "/PleaseGod/static/js/main.87fab2e3.js",
+    "main.js": "/PleaseGod/static/js/main.030cd58b.js",
     "index.html": "/PleaseGod/index.html",
     "main.9e76b6f4.css.map": "/PleaseGod/static/css/main.9e76b6f4.css.map",
-    "main.87fab2e3.js.map": "/PleaseGod/static/js/main.87fab2e3.js.map"
+    "main.030cd58b.js.map": "/PleaseGod/static/js/main.030cd58b.js.map"
   },
   "entrypoints": [
     "static/css/main.9e76b6f4.css",
-    "static/js/main.87fab2e3.js"
+    "static/js/main.030cd58b.js"
   ]
 }
