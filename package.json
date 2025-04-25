@@ -1,13 +1,16 @@
 {
+  "homepage": "https://om-alatagi.github.io/PleaseGod",
   "name": "new-project",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
     "framer-motion": "^12.5.0",
+    "html5-qrcode": "^2.3.8",
+    "qrcode": "^1.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.30.0",
