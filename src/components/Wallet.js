@@ -225,8 +225,8 @@ function Wallet() {
   const [showScanner, setShowScanner] = useState(false);
 
 
-  const API_TXN_URL = "http://13.233.223.129:8083/txns";
-  const API_WALLET_URL = "http://13.233.223.129:8081/wallets";
+  const API_TXN_URL = "http://3.109.5.235:8083/txns";
+  const API_WALLET_URL = "http://3.109.5.235:8081/wallets";
 
  
   useEffect(() => {

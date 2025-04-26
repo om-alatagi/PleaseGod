@@ -14,7 +14,7 @@ function Login() {
   });
 
   const navigate = useNavigate();
-  const API_BASE_URL = "http://13.233.223.129:8080/User";
+  const API_BASE_URL = "http://3.109.5.235:8080/User";
 
   const handleChange = (e) => {
     if (isSignUp) {
